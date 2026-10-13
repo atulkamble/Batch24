@@ -1,8 +1,4 @@
-# AWS Cloud Computing – Complete Revision Notes
-
-Definitions • Important Concepts • Points to Remember • Exam Preparation
-
-These notes follow the 19 training modules in your uploaded AWS syllabus. The definitions and key points expand on the syllabus topics to make them easier to revise before the AWS quiz.
+# AWS Notes
 
 ## 1. Introduction to AWS and Cloud Computing
 
