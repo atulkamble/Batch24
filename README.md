@@ -67,20 +67,6 @@ Points to remember
 - Only healthy targets normally receive traffic when healthy targets are available.
 - An ALB can route traffic to EC2 instances through target groups.
 
-ALB Traffic Flow
-
-Internet / Client
-
-Application Load Balancer
-
-Target Group
-
-EC2 Server 1
-
-EC2 Server 2
-
-EC2 Server 3
-
 ## 4. Auto Scaling, Launch Templates and SNS
 
 Definitions
