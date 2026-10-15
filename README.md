@@ -1,3 +1,839 @@
+# Linux Notes
+
+## Session 1: Introduction to Linux & Essential Commands
+
+### 1. What is Linux?
+
+Linux is an open-source, Unix-like operating system kernel. Linux distributions combine the kernel with system utilities and software to provide a complete operating system.
+
+Features of Linux
+
+- Open-source and customizable
+- Multiuser and multitasking
+- Secure permission model
+- Stable and reliable
+- Command-line and GUI support
+- Widely used in cloud, servers and DevOps
+
+### 2. Popular Linux Distributions
+
+| Distribution | Common use               | Package manager |
+| ------------ | ------------------------ | --------------- |
+| Ubuntu       | Cloud, servers, desktops | apt             |
+| Debian       | Stable servers           | apt             |
+| RHEL         | Enterprise servers       | dnf             |
+| Amazon Linux | AWS EC2                  | dnf             |
+| Rocky Linux  | Enterprise workloads     | dnf             |
+| Fedora       | Development              | dnf             |
+
+### 3. Linux vs Windows
+
+| Linux                            | Windows                                |
+| -------------------------------- | -------------------------------------- |
+| Mostly open-source distributions | Proprietary operating system           |
+| Bash and other shells            | PowerShell and CMD                     |
+| Case-sensitive filenames         | Usually case-insensitive               |
+| `/home` user directories         | `C:\Users` user directories            |
+| Commonly used for servers        | Commonly used for desktops and servers |
+
+### 4. Kernel vs Shell
+
+| Component | Description                                |
+| --------- | ------------------------------------------ |
+| Kernel    | Manages CPU, memory, devices and processes |
+| Shell     | Interprets user commands                   |
+| Bash      | Common Linux command shell                 |
+| Terminal  | Interface used to interact with a shell    |
+
+### 5. Essential Linux Commands
+
+| Command    | Purpose                                 |
+| ---------- | --------------------------------------- |
+| `pwd`      | Current directory                       |
+| `ls`       | List files                              |
+| `ls -la`   | Detailed listing including hidden files |
+| `cd /home` | Change directory                        |
+| `whoami`   | Current username                        |
+| `uname -a` | Kernel and system information           |
+| `hostname` | System hostname                         |
+| `date`     | Current date and time                   |
+| `clear`    | Clear terminal                          |
+| `history`  | Command history                         |
+
+AWS EC2 SSH Login
+
+```
+chmod 400 mykey.pem
+ssh -i mykey.pem ec2-user@PUBLIC_IP
+```
+
+For Ubuntu EC2, use `ubuntu` instead of `ec2-user`.
+
+Points to Remember
+
+- Linux is widely used in AWS, Azure and Kubernetes.
+- Root is the superuser.
+- Commands and filenames are case-sensitive.
+- SSH uses TCP port 22 by default.
+
+## Session 2: Linux File System Hierarchy
+
+### 1. Important Linux Directories
+
+| Directory | Purpose                        |
+| --------- | ------------------------------ |
+| `/`       | Root directory                 |
+| `/home`   | Regular user home directories  |
+| `/root`   | Root user's home               |
+| `/etc`    | System configuration           |
+| `/var`    | Logs and variable data         |
+| `/tmp`    | Temporary files                |
+| `/usr`    | Applications and utilities     |
+| `/bin`    | Essential user commands        |
+| `/sbin`   | System administration commands |
+| `/dev`    | Device files                   |
+| `/proc`   | Process and kernel information |
+| `/boot`   | Boot files                     |
+| `/mnt`    | Temporary mount points         |
+
+### 2. Home vs Working Directory
+
+| Home directory              | Working directory            |
+| --------------------------- | ---------------------------- |
+| Default location for a user | Current location in terminal |
+| `echo $HOME`                | `pwd`                        |
+| `cd ~`                      | `cd /var/log`                |
+
+### 3. Directory Commands
+
+```
+pwd
+ls
+ls -l
+ls -a
+cd /etc
+cd ..
+cd ~
+cd -
+mkdir demo
+mkdir -p project/src
+rmdir demo
+```
+
+### 4. Absolute vs Relative Path
+
+| Path     | Example                 |
+| -------- | ----------------------- |
+| Absolute | `/home/ubuntu/file.txt` |
+| Relative | `docs/file.txt`         |
+| Parent   | `../file.txt`           |
+| Current  | `./script.sh`           |
+
+Points to Remember
+
+- `/` is the filesystem root.
+- `~` represents the current user's home.
+- `.` means current directory.
+- `..` means parent directory.
+- Absolute paths start with `/`.
+
+## Session 3: Linux Text Editors
+
+### 1. Types of Editors
+
+| Editor | Description                       |
+| ------ | --------------------------------- |
+| vi     | Terminal-based editor             |
+| vim    | Enhanced vi editor                |
+| nano   | Beginner-friendly terminal editor |
+
+### 2. vi / vim Commands
+
+```
+vi file.txt
+```
+
+| Key     | Action                |
+| ------- | --------------------- |
+| `i`     | Insert mode           |
+| `Esc`   | Return to normal mode |
+| `:w`    | Save                  |
+| `:q`    | Quit                  |
+| `:wq`   | Save and quit         |
+| `:q!`   | Quit without saving   |
+| `dd`    | Delete line           |
+| `yy`    | Copy line             |
+| `p`     | Paste                 |
+| `u`     | Undo                  |
+| `/word` | Search word           |
+| `G`     | Last line             |
+| `gg`    | First line            |
+
+### 3. nano Commands
+
+```
+nano file.txt
+```
+
+| Shortcut | Action   |
+| -------- | -------- |
+| Ctrl + O | Save     |
+| Ctrl + X | Exit     |
+| Ctrl + W | Search   |
+| Ctrl + K | Cut line |
+| Ctrl + U | Paste    |
+
+Points to Remember
+
+- vi has normal, insert and visual modes.
+- nano is easier for beginners.
+- `Esc` returns vim to normal mode.
+- Use `:wq` to save and exit vi.
+
+## Session 4: Linux Text Processing
+
+### 1. File Management and Viewing
+
+| Command              | Purpose                |
+| -------------------- | ---------------------- |
+| `touch file.txt`     | Create empty file      |
+| `cat file.txt`       | Display content        |
+| `less file.txt`      | Scroll through file    |
+| `more file.txt`      | View file page by page |
+| `head -n 5 file.txt` | First 5 lines          |
+| `tail -n 5 file.txt` | Last 5 lines           |
+| `tail -f app.log`    | Monitor log            |
+| `cp a.txt b.txt`     | Copy file              |
+| `mv a.txt b.txt`     | Move or rename         |
+| `rm file.txt`        | Delete file            |
+
+### 2. Redirection and Pipes
+
+```
+echo "Hello Linux" > file.txt
+echo "Welcome" >> file.txt
+cat file.txt
+cat file.txt | grep Hello
+ls > files.txt
+```
+
+| Operator | Purpose                        |
+| -------- | ------------------------------ |
+| `>`      | Overwrite output               |
+| `>>`     | Append output                  |
+| `<`      | Input redirection              |
+| `\\|`    | Pipe output                    |
+| `&&`     | Run next command if successful |
+| `;`      | Run commands sequentially      |
+
+### 3. Text Processing Commands
+
+```
+wc -l file.txt
+wc -w file.txt
+grep "error" app.log
+grep -i "error" app.log
+grep -n "error" app.log
+sort names.txt
+sort names.txt | uniq
+sort names.txt | uniq -c
+cut -d ',' -f1 users.csv
+```
+
+Points to Remember
+
+- `grep` searches patterns.
+- `wc` counts lines, words and bytes.
+- `sort` arranges data.
+- `uniq` removes adjacent duplicate lines.
+- `cut` extracts fields.
+- `>` overwrites; `>>` appends.
+
+## Session 5: User and Group Management
+
+### 1. Types of Linux Users
+
+| Type    | Purpose                        |
+| ------- | ------------------------------ |
+| Root    | Full administrative access     |
+| System  | Runs services and applications |
+| Regular | Normal user activities         |
+
+### 2. User Management Commands
+
+```
+sudo useradd -m john
+sudo passwd john
+id john
+sudo usermod -s /bin/bash john
+sudo userdel -r john
+```
+
+### 3. Group Management Commands
+
+```
+sudo groupadd developers
+sudo usermod -aG developers john
+groups john
+getent group developers
+sudo gpasswd -d john developers
+sudo groupdel developers
+```
+
+### 4. Important Account Files
+
+| File           | Purpose                   |
+| -------------- | ------------------------- |
+| `/etc/passwd`  | User account information  |
+| `/etc/shadow`  | Password hashes and aging |
+| `/etc/group`   | Group information         |
+| `/etc/sudoers` | Sudo authorization        |
+
+### 5. Switching Users
+
+```
+su - john
+sudo -i
+sudo whoami
+whoami
+```
+
+Points to Remember
+
+- UID 0 identifies root.
+- Use `sudo` for privileged commands.
+- `usermod -aG` adds supplementary group membership.
+- Never edit `/etc/shadow` casually.
+- Follow least-privilege access.
+
+## Session 6: Linux File Permissions
+
+### 1. Permission Types
+
+| Permission | Symbol | Value |
+| ---------- | ------ | ----- |
+| Read       | r      | 4     |
+| Write      | w      | 2     |
+| Execute    | x      | 1     |
+
+### 2. Permission Examples
+
+| Numeric | Symbolic  | Meaning                         |
+| ------- | --------- | ------------------------------- |
+| 777     | rwxrwxrwx | Everyone full access            |
+| 755     | rwxr-xr-x | Owner full, others read/execute |
+| 700     | rwx------ | Owner full access               |
+| 644     | rw-r--r-- | Owner write, others read        |
+| 600     | rw------- | Owner read/write                |
+| 400     | r-------- | Owner read only                 |
+
+### 3. Commands
+
+```
+ls -l
+chmod 755 script.sh
+chmod +x script.sh
+chmod u+x script.sh
+chmod o-r file.txt
+sudo chown john file.txt
+sudo chown john:developers file.txt
+sudo chgrp developers file.txt
+```
+
+### 4. Access Control Lists
+
+```
+getfacl file.txt
+setfacl -m u:john:rw file.txt
+setfacl -x u:john file.txt
+```
+
+Points to Remember
+
+- Permissions apply to owner, group and others.
+- `chmod` changes permissions.
+- `chown` changes ownership.
+- `chgrp` changes group ownership.
+- ACLs provide additional access rules.
+- Avoid `777` for sensitive files.
+
+## Session 7: Shell Scripting Fundamentals
+
+### 1. What is Shell Scripting?
+
+Shell scripting automates repetitive Linux tasks using commands, variables and control structures.
+
+### 2. Basic Shell Script
+
+```
+#!/bin/bash
+
+echo "Hello Linux"
+echo "Current User: $(whoami)"
+echo "Hostname: $(hostname)"
+```
+
+Run:
+
+```
+chmod +x script.sh
+./script.sh
+```
+
+### 3. Variables
+
+```
+#!/bin/bash
+
+name="Linux"
+echo "Welcome to $name"
+echo "Home: $HOME"
+echo "User: $USER"
+```
+
+### 4. User Input
+
+```
+#!/bin/bash
+
+read -p "Enter your name: " name
+echo "Hello $name"
+```
+
+### 5. Arithmetic Operators
+
+```
+a=10
+b=5
+
+echo $((a+b))
+echo $((a-b))
+echo $((a*b))
+echo $((a/b))
+echo $((a%b))
+```
+
+| Operator | Purpose        |
+| -------- | -------------- |
+| `+`      | Addition       |
+| `-`      | Subtraction    |
+| `*`      | Multiplication |
+| `/`      | Division       |
+| `%`      | Modulus        |
+
+Points to Remember
+
+- `#!/bin/bash` specifies Bash interpreter.
+- Variables are assigned without spaces around `=`.
+- `$variable` retrieves values.
+- `read` accepts user input.
+- `$(( ))` performs integer arithmetic.
+
+## Session 8: Shell Scripting Control Flow
+
+### 1. If-Else Statement
+
+```
+#!/bin/bash
+
+read -p "Enter number: " num
+
+if [ "$num" -gt 10 ]; then
+    echo "Greater than 10"
+else
+    echo "10 or less"
+fi
+```
+
+### 2. elif Statement
+
+```
+if [ "$num" -gt 10 ]; then
+    echo "Greater"
+elif [ "$num" -eq 10 ]; then
+    echo "Equal"
+else
+    echo "Smaller"
+fi
+```
+
+### 3. Case Statement
+
+```
+read -p "Enter choice: " choice
+
+case "$choice" in
+    1) echo "Start" ;;
+    2) echo "Stop" ;;
+    *) echo "Invalid choice" ;;
+esac
+```
+
+### 4. For Loop
+
+```
+for i in 1 2 3 4 5
+do
+    echo "$i"
+done
+```
+
+### 5. While Loop
+
+```
+i=1
+
+while [ "$i" -le 5 ]
+do
+    echo "$i"
+    i=$((i+1))
+done
+```
+
+### 6. Until Loop
+
+```
+i=1
+
+until [ "$i" -gt 5 ]
+do
+    echo "$i"
+    i=$((i+1))
+done
+```
+
+### 7. Functions
+
+```
+#!/bin/bash
+
+greet() {
+    echo "Hello Linux"
+}
+
+greet
+```
+
+### 8. Comparison Operators
+
+| Operator | Meaning          |
+| -------- | ---------------- |
+| `-eq`    | Equal            |
+| `-ne`    | Not equal        |
+| `-gt`    | Greater than     |
+| `-lt`    | Less than        |
+| `-ge`    | Greater or equal |
+| `-le`    | Less or equal    |
+
+Points to Remember
+
+- `if` performs conditional checks.
+- `case` handles multiple choices.
+- `for` iterates over values.
+- `while` repeats while a condition is true.
+- `until` repeats until a condition becomes true.
+- `break` exits a loop; `continue` skips to the next iteration.
+
+## Session 9: Linux System Administration
+
+### 1. Process Management
+
+| Command           | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| `ps aux`          | List processes                           |
+| `top`             | Live process monitoring                  |
+| `htop`            | Interactive process viewer, if installed |
+| `kill PID`        | Terminate process                        |
+| `kill -9 PID`     | Force termination                        |
+| `pgrep nginx`     | Find process IDs                         |
+| `free -h`         | Memory usage                             |
+| `df -h`           | Filesystem disk usage                    |
+| `du -sh /var/log` | Directory size                           |
+| `uptime`          | System uptime and load                   |
+
+### 2. Service Management
+
+```
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl restart nginx
+sudo systemctl status nginx
+sudo systemctl enable nginx
+sudo systemctl disable nginx
+```
+
+### 3. Package Management
+
+| Ubuntu/Debian            | RHEL/Amazon Linux        |
+| ------------------------ | ------------------------ |
+| `sudo apt update`        | `sudo dnf check-update`  |
+| `sudo apt install nginx` | `sudo dnf install nginx` |
+| `sudo apt remove nginx`  | `sudo dnf remove nginx`  |
+| `sudo apt upgrade`       | `sudo dnf upgrade`       |
+
+### 4. Backup and Archive
+
+```
+tar -cvf backup.tar /home/ubuntu
+tar -xvf backup.tar
+tar -czvf backup.tar.gz /home/ubuntu
+tar -xzvf backup.tar.gz
+```
+
+### 5. Log Management
+
+```
+journalctl -xe
+journalctl -u nginx
+journalctl -f
+tail -f /var/log/syslog
+```
+
+On RHEL-based systems, `/var/log/messages` is commonly used instead of `/var/log/syslog`.
+
+### 6. Cron Jobs
+
+```
+crontab -e
+crontab -l
+```
+
+Example:
+
+```
+0 2 * * * /home/ubuntu/backup.sh
+```
+
+Runs the script every day at 2 AM, according to the cron environment's configured timezone.
+
+Points to Remember
+
+- `systemctl` manages systemd services.
+- `journalctl` displays systemd logs.
+- `tar` creates and extracts archives.
+- `cron` schedules recurring tasks.
+- Check memory, CPU, disk and logs during troubleshooting.
+
+## Session 10: IPv4 Addressing
+
+### 1. What is IPv4?
+
+IPv4 is a 32-bit addressing protocol used to identify network interfaces.
+
+Example: `192.168.1.10`
+
+### 2. IPv4 Address Classes
+
+| Class | First octet | Historical default mask |
+| ----- | ----------- | ----------------------- |
+| A     | 1–126       | 255.0.0.0               |
+| B     | 128–191     | 255.255.0.0             |
+| C     | 192–223     | 255.255.255.0           |
+| D     | 224–239     | Multicast               |
+| E     | 240–255     | Reserved                |
+
+Modern networks primarily use CIDR rather than classful addressing.
+
+### 3. Public vs Private IP
+
+| Public IP                                      | Private IP                             |
+| ---------------------------------------------- | -------------------------------------- |
+| Globally routable when allocated and permitted | Not routed on public Internet          |
+| Used for Internet communication                | Used inside private networks           |
+| Must be globally unique                        | Can be reused across separate networks |
+
+### 4. Private IPv4 Ranges
+
+| Range                         | CIDR |
+| ----------------------------- | ---- |
+| 10.0.0.0 – 10.255.255.255     | /8   |
+| 172.16.0.0 – 172.31.255.255   | /12  |
+| 192.168.0.0 – 192.168.255.255 | /16  |
+
+### 5. Common Subnet Masks
+
+| CIDR | Mask            | Total addresses |
+| ---- | --------------- | --------------- |
+| /8   | 255.0.0.0       | 16,777,216      |
+| /16  | 255.255.0.0     | 65,536          |
+| /24  | 255.255.255.0   | 256             |
+| /25  | 255.255.255.128 | 128             |
+| /26  | 255.255.255.192 | 64              |
+| /27  | 255.255.255.224 | 32              |
+| /28  | 255.255.255.240 | 16              |
+
+Points to Remember
+
+- IPv4 is 32-bit.
+- Each octet ranges from 0 to 255.
+- CIDR defines network prefix length.
+- A subnet mask separates network and host portions.
+- Public and private addressing have different routing purposes.
+
+## Session 11: IPv4 Subnetting & IPv6
+
+### 1. Subnetting
+
+Subnetting divides a larger network into smaller logical networks.
+
+Formulas
+
+\\[ \text{Total IPv4 addresses}=2^{32-\text{prefix}} \\]
+
+\\[ \text{Usable hosts}=2^{32-\text{prefix}}-2 \\]
+
+The usable-host formula applies to conventional IPv4 subnets, excluding special `/31` and `/32` cases.
+
+### 2. Subnetting Example
+
+Network: `192.168.1.0/24`
+
+Divide into 4 equal subnets:
+
+| Subnet | Network          | Usable hosts |
+| ------ | ---------------- | ------------ |
+| 1      | 192.168.1.0/26   | 62           |
+| 2      | 192.168.1.64/26  | 62           |
+| 3      | 192.168.1.128/26 | 62           |
+| 4      | 192.168.1.192/26 | 62           |
+
+### 3. What is IPv6?
+
+IPv6 is a 128-bit addressing protocol designed to provide a much larger address space than IPv4.
+
+Example:
+
+```
+2001:db8:abcd:12::1
+```
+
+### 4. IPv6 Address Types
+
+| Type      | Purpose                             |
+| --------- | ----------------------------------- |
+| Unicast   | One-to-one communication            |
+| Multicast | One-to-many group communication     |
+| Anycast   | One-to-nearest suitable destination |
+
+### 5. IPv4 vs IPv6
+
+| IPv4                       | IPv6                      |
+| -------------------------- | ------------------------- |
+| 32-bit                     | 128-bit                   |
+| Dotted decimal             | Hexadecimal               |
+| Example: 192.168.1.1       | Example: 2001:db8::1      |
+| Broadcast supported        | No broadcast              |
+| ARP for address resolution | Neighbor Discovery        |
+| NAT widely used            | NAT generally unnecessary |
+
+### 6. EUI-64
+
+Modified EUI-64 is a method for deriving a 64-bit IPv6 interface identifier from a 48-bit MAC address. Modern systems commonly use privacy or stable address-generation methods instead.
+
+Points to Remember
+
+- Subnetting improves address allocation and network segmentation.
+- IPv6 uses hexadecimal notation.
+- IPv6 supports address compression with `::`.
+- Dual stack allows IPv4 and IPv6 together.
+- IPv6 supports SLAAC for automatic address configuration.
+
+## Session 12: Linux Networking & Security
+
+### 1. Network Inspection Commands
+
+| Command                       | Purpose                    |
+| ----------------------------- | -------------------------- |
+| `ip addr`                     | Show IP addresses          |
+| `ip link`                     | Show interfaces            |
+| `ip route`                    | Show routing table         |
+| `hostname -I`                 | Show host IP addresses     |
+| `ping 8.8.8.8`                | Test ICMP reachability     |
+| `traceroute google.com`       | Trace network path         |
+| `nslookup google.com`         | DNS lookup                 |
+| `dig google.com`              | Detailed DNS lookup        |
+| `ss -tuln`                    | Listening TCP/UDP ports    |
+| `ss -tulnp`                   | Ports with process details |
+| `curl -I https://example.com` | HTTP header test           |
+
+### 2. IP Configuration
+
+```
+ip addr show
+ip route show
+ip link show
+```
+
+Temporary IP configuration example:
+
+```
+sudo ip addr add 192.168.1.100/24 dev eth0
+sudo ip link set eth0 up
+```
+
+Replace `eth0` with the actual interface name. Avoid changing IP addresses on remote servers without a recovery path.
+
+### 3. Common Networking Ports
+
+| Port | Protocol / Service           |
+| ---- | ---------------------------- |
+| 22   | SSH                          |
+| 53   | DNS                          |
+| 80   | HTTP                         |
+| 443  | HTTPS                        |
+| 3306 | MySQL                        |
+| 5432 | PostgreSQL                   |
+| 8080 | Common alternative HTTP port |
+
+### 4. Firewall Commands
+
+firewalld
+
+```
+sudo systemctl status firewalld
+sudo firewall-cmd --list-all
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --reload
+```
+
+iptables
+
+```
+sudo iptables -L -n
+sudo iptables -S
+sudo iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+```
+
+The iptables example adds a runtime rule; persistence depends on the distribution and firewall configuration.
+
+Points to Remember
+
+- `ip` is preferred over legacy `ifconfig`.
+- `ping` tests ICMP connectivity, not application availability.
+- `dig` and `nslookup` troubleshoot DNS.
+- `ss` displays sockets and listening ports.
+- Firewalls control permitted network traffic.
+- In AWS, Security Groups and NACLs also affect EC2 connectivity.
+
+## Linux Commands – Quick Revision
+
+| Category        | Commands                                  |
+| --------------- | ----------------------------------------- |
+| Navigation      | `pwd`, `ls`, `cd`                         |
+| Files           | `touch`, `cp`, `mv`, `rm`, `mkdir`        |
+| Viewing         | `cat`, `less`, `head`, `tail`             |
+| Text processing | `grep`, `sort`, `uniq`, `cut`, `wc`       |
+| Users           | `useradd`, `usermod`, `userdel`, `passwd` |
+| Groups          | `groupadd`, `groupdel`, `groups`          |
+| Permissions     | `chmod`, `chown`, `chgrp`, `setfacl`      |
+| Processes       | `ps`, `top`, `kill`, `pgrep`              |
+| Services        | `systemctl`, `journalctl`                 |
+| Packages        | `apt`, `dnf`                              |
+| Storage         | `df`, `du`, `tar`                         |
+| Scheduling      | `crontab`                                 |
+| Networking      | `ip`, `ping`, `ss`, `dig`, `curl`         |
+| Firewall        | `iptables`, `firewall-cmd`                |
+
 # AWS Notes
 
 ## 1. Introduction to AWS and Cloud Computing
